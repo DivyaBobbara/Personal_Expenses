@@ -1,13 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:io';
+import './adaptive_button.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
 
-  NewTransaction(this.addNewTransaction);
+  NewTransaction(this.addNewTransaction){
+    print("constructor NewTransaction widget");
+  }
 
   @override
-  State<NewTransaction> createState() => _NewTransactionState();
+  State<NewTransaction> createState() {
+    print("create state NewTransaction");
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
@@ -15,8 +23,34 @@ class _NewTransactionState extends State<NewTransaction> {
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
 
+  _NewTransactionState() {
+    print("constructor NewTransaction State");
+  }
+
+  @override
+  void initState() {
+
+    // TODO: implement initState
+    super.initState();
+    print("init method _NewTransactionState");
+  }
+
+  @override
+  void didUpdateWidget(covariant NewTransaction oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateWidget _NewTransactionState");
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print("dispose _NewTransactionState");
+  }
+
   void submitData() {
-    if(_amountController.text.isEmpty) {
+    if (_amountController.text.isEmpty) {
       return;
     }
     final enteredTitle = _titleController.text;
@@ -24,8 +58,8 @@ class _NewTransactionState extends State<NewTransaction> {
     if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
       return;
     }
-    widget.addNewTransaction(
-        _titleController.text, double.parse(_amountController.text),_selectedDate);
+    widget.addNewTransaction(_titleController.text,
+        double.parse(_amountController.text), _selectedDate);
 
     Navigator.of(context).pop();
   }
@@ -54,7 +88,8 @@ class _NewTransactionState extends State<NewTransaction> {
     return Card(
       elevation: 6,
       child: Container(
-        padding: EdgeInsets.all(50),
+        padding: EdgeInsets.all(30),
+        width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
@@ -81,12 +116,7 @@ class _NewTransactionState extends State<NewTransaction> {
                       child: Text(_selectedDate == null
                           ? "No Date Choosen"
                           : DateFormat.yMd().format(_selectedDate!))),
-                  TextButton(
-                      onPressed: datePicker,
-                      child: Text(
-                        'Choose Date',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
+                  AdaptiveButton("Choose Date",datePicker),
                 ],
               ),
             ),
@@ -97,8 +127,11 @@ class _NewTransactionState extends State<NewTransaction> {
               ),
               // style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor)),
               style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all(Theme.of(context).textTheme.headlineLarge?.color),
-                  backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                foregroundColor: MaterialStateProperty.all(
+                  Theme.of(context).primaryColor,
+                ),
+                // backgroundColor:
+                //     MaterialStateProperty.all(Theme.of(context).primaryColor),
               ),
             ),
           ],

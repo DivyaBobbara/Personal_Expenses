@@ -5,14 +5,15 @@ class ChartBar extends StatelessWidget {
   final double spendingAmount;
   final double spendingPercentage;
 
-  ChartBar(
+  const ChartBar(
       {required this.label,
       required this.spendingAmount,
       required this.spendingPercentage});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context,constraints) {
+    print("build() ChartBar");
+    return LayoutBuilder(builder: (context, constraints) {
       return Column(
         children: <Widget>[
           Container(
@@ -49,10 +50,11 @@ class ChartBar extends StatelessWidget {
           SizedBox(
             height: constraints.maxHeight * 0.05,
           ),
-          Container(height :constraints.maxHeight * 0.15,child: FittedBox(child: Text(label))),
+          Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(child: Text(label))),
         ],
       );
     });
-
   }
 }

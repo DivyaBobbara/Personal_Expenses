@@ -6,7 +6,7 @@ import './chart_bar.dart';
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
 
-  Chart(this.recentTransactions);
+  const Chart(this.recentTransactions);
 
   List<Map<String, Object>> get groupedTransactionValues {
     return List.generate(7, (index) {
@@ -35,29 +35,29 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("build() chart");
     print("$groupedTransactionValues,groped");
-    return  Card(
-          elevation: 6,
-          margin: EdgeInsets.all(20),
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: groupedTransactionValues.map((data) {
-                return Flexible(
-                  fit: FlexFit.tight,
-                  child: ChartBar(
-                    label: data['day'] as String,
-                    spendingAmount: data['amount'] as double,
-                    spendingPercentage: totalSpending == 0.0
-                        ? 0.0
-                        : ((data['amount'] as double) / totalSpending),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-
+    return Card(
+      elevation: 6,
+      margin: EdgeInsets.all(20),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactionValues.map((data) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                label: data['day'] as String,
+                spendingAmount: data['amount'] as double,
+                spendingPercentage: totalSpending == 0.0
+                    ? 0.0
+                    : ((data['amount'] as double) / totalSpending),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 }
